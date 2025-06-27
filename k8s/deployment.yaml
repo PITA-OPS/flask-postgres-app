@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-postgres-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flask-postgres
+  template:
+    metadata:
+      labels:
+        app: flask-postgres
+    spec:
+      containers:
+      - name: flask-app
+        image: your-dockerhub-username/flask-postgres:latest
+        ports:
+        - containerPort: 5000
+        env:
+        - name: DB_HOST
+          value: "postgres-service"
+        - name: DB_NAME
+          value: "flaskdb"
+        - name: DB_USER
+          value: "flaskuser"
+        - name: DB_PASS
+          value: "flaskpass"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: flask-postgres
+  ports:
+  - port: 80
+    targetPort: 5000
