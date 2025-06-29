@@ -1,6 +1,6 @@
 # Flask + PostgreSQL DevOps Project
 
-A complete example DevOps stack:
+A complete DevOps stack:
 - Flask backend
 - PostgreSQL database
 - Docker Compose for development
